@@ -4,7 +4,7 @@
 #
 # PartB - Assuming three VMs are running (and we have
 # their ipaddresses in a well-known file),
-#    1) Edit the bash proviel to include a specified path
+#    1) Edit the bash profile to include a specified path
 #    2) Copy over the a hosts file
 #
 #############################################################
