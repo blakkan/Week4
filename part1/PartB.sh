@@ -19,13 +19,13 @@ echo ProcessingIP:$line
 # First, just probe machine to see if connected
 # (And deal with the known host prompt)
 #
-yes yes | ssh root@$line 'bash -s' < probe.sh
+ssh root@$line 'bash -s' < probe.sh
 
 #
 # edit the bash profile to append to the $PATH
 #  (Note; each time this is run, it appends again)
 #
-yes yes | ssh root@$line 'bash -s' < update_path.sh
+ssh root@$line 'bash -s' < update_path.sh
 
 
 #
@@ -34,9 +34,10 @@ yes yes | ssh root@$line 'bash -s' < update_path.sh
 ###yes yes | scp -r ~/.ssh/id_rsa root@$line:/root/.ssh/id_rsa
 yes yes | scp ~/.ssh/id_rsa root@$line:/root/.ssh/id_rsa
 yes yes | scp ~/.ssh/id_rsa.pub root@$line:/root/.ssh/id_rsa.pub
+yes yes | scp ~/.ssh/config root@$line:/root/.ssh/config
 
 echo "chmod of rsa file"
-yes yes | ssh root@$line 'bash -s' < change_rsa_protection.sh
+ssh root@$line 'bash -s' < change_rsa_protection.sh
 
 
 # Generate a hosts file and overwrite on each target
@@ -47,6 +48,6 @@ ruby generate_hosts_and_node_file.rb
 #copy them both over
 yes yes | scp hosts root@$line:/etc/hosts
 yes yes | scp nodefile root@$line:/root/nodefile
-yes yes | ssh root@$line 'bash -s' < change_host_and_nodefile_protection.sh
+ssh root@$line 'bash -s' < change_host_and_nodefile_protection.sh
 
 done
