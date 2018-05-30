@@ -28,5 +28,5 @@ yes yes | scp diskfile.fpo root@$ip_addr:/root/diskfile.fpo
 yes yes | scp part_d.sh root@$ip_addr:/root/part_d.sh
 
 #and run it
-echo "Now please log in to $ip_addr and run the part_d.sh script"
+echo "Now please ssh over to root@$ip_addr and run the part_d.sh script (i.e. source part_d.sh)"
 #ssh root@$ip_addr 'bash part_d.sh'

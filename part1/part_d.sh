@@ -30,7 +30,10 @@ mmmount all -a
 cd /gpfs/gpfsfpo;df -h .
 
 #and verify we can write, and read on all
-cd /gpfs/gpfsfpo;touch aa'
-ls -l /gpfs/gpfsfpo'
+
+cd /gpfs/gpfsfpo;touch aa
+echo "Now, should be able so see the shared file from all three vms."
+echo "It's local to the first one, which touched it, but visible to all"
+ls -l /gpfs/gpfsfpo
 ssh gpfs2 'ls -l /gpfs/gpfsfpo'
 ssh gpfs3 'ls -l /gpfs/gpfsfpo'

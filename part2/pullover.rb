@@ -12,9 +12,12 @@
 #
 #  File names hard coded in here, could parametize for production
 #
+#  This leaves the individual files fully sorted (by bigram) and
+# fully (internally) combined.
+#
 # ################################################
 first, last = ARGV
-
+Dir.chdir("/gpfs/gpfsfpo")
 system("mkdir data_#{first}_#{last}")
 
 (first.to_i..last.to_i).each do |num|
@@ -32,7 +35,7 @@ system("mkdir data_#{first}_#{last}")
 
   # Map and combine before downcasing (will make downcasing faster)
   puts "first map combine (prior to downcasing)"
-  system("./map_combiner -m googlebooks-eng-all-2gram-20090715-#{num_string}.csv > map_precombine_#{num_string}.csv")
+  system("/root/map_combiner -m googlebooks-eng-all-2gram-20090715-#{num_string}.csv > map_precombine_#{num_string}.csv")
   system("rm googlebooks-eng-all-2gram-20090715-#{num_string}.csv")
 
 
@@ -49,7 +52,7 @@ system("mkdir data_#{first}_#{last}")
   # Note we're not guaranteed the inputs are sorted, so this is a "best efforts" combine,
   # but will greatly reduce the files size.
   puts "final combine (on fully sorted inputs)"
-  system("./map_combiner sorted_#{num_string}.csv > data_#{first}_#{last}/N#{num_string}.csv")
+  system("/root/map_combiner sorted_#{num_string}.csv > data_#{first}_#{last}/N#{num_string}.csv")
   system("rm sorted_#{num_string}.csv")
 
 end
