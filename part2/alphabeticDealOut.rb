@@ -26,7 +26,7 @@ file_handles = {}
 hostname = `hostname`.split(/\./)[0]
 
 (Array('a'..'z') +  ['X']).each do |letter|
-  file_handles[letter] = open(letter + "-" + hostname + ".alp", "a")
+  file_handles[letter] = open(letter + "-" + hostname + ".csv", "a")
 end
 
 puts "dealing out"

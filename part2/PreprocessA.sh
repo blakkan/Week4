@@ -33,34 +33,34 @@ cat creds.txt
 
 #loop through the vs.txt file which has lines (loops rolled like this
 # to watch them run.)
-cut -d' ' -f5 vs.txt | while read ip_addr
+cut -d' ' -f5 vs.txt
+
+for ip_addr_p in $(cut -d' ' -f5 vs.txt)
 do
-echo "install ruby on on $ip_addr"
-ssh root@$ip_addr "yum -y install ruby || true"
+ echo "install ruby on $ip_addr_p"
+ ssh root@$ip_addr_p "yum -y install ruby || true"
 
-echo "install map_combiner on $ip_addr"
-scp map_combiner.c root@$ip_addr:/root/map_combiner.c
-ssh root@$ip_addr "gcc map_combiner.c -o map_combiner"
+ echo "install map_combiner on $ip_addr_p"
+ scp map_combiner.c root@$ip_addr_p:/root/map_combiner.c
+ ssh root@$ip_addr_p "gcc map_combiner.c -o map_combiner"
 
-echo "install pullover.rb script on $ip_addr"
-scp pullover.rb root@$ip_addr:/root/pullover.rb
+ echo "install pullover.rb script on $ip_addr_p"
+ scp pullover.rb root@$ip_addr_p:/root/pullover.rb
 
-echo "install alphabeticDealOut.rb script on $ip_addr"
-scp alphabeticDealOut.rb root@$ip_addr:/root/alphabeticDealOut.rb
+ echo "install alphabeticDealOut.rb script on $ip_addr_p"
+ scp alphabeticDealOut.rb root@$ip_addr_p:/root/alphabeticDealOut.rb
 
-echo "install shuffleSort.rb script on $ip_addr"
-scp shuffleSort.rb root@$ip_addr:/root/shuffleSort.rb
+ echo "install shuffleSort.rb script on $ip_addr_p"
+ scp shuffleSort.rb root@$ip_addr_p:/root/shuffleSort.rb
 
-echo "install reduceToKeyValueStore.rb script on $ip_addr"
-scp reduceToKeyValueStore.rb root@$ip_addr:/root/reduceToKeyValueStore.rb
+ echo "install reduceToKeyValueStore.rb script on $ip_addr_p"
+ scp reduceToKeyValueStore.rb root@$ip_addr_p:/root/reduceToKeyValueStore.rb
 
-echo "install pick_next_word.rb script on $ip_addr"
-scp pick_next_word.rb root@$ip_addr:/root/pick_next_word.rb
+ echo "install pick_next_word.rb script on $ip_addr_p"
+ scp pick_next_word.rb root@$ip_addr_p:/root/pick_next_word.rb
 
-echo "install mumbler.rb script on $ip_addr"
-scp mumbler.rb root@$ip_addr:/root/mumbler.rb
-
-sleep 2
+ echo "install mumbler script on $ip_addr_p"
+ scp mumbler root@$ip_addr_p:/root/mumbler
 
 done
 
@@ -70,10 +70,10 @@ echo "and on gpfs1 locally run pullover.rb 0 33"
 echo "on gpfs2 run pullover.rb 34 66"
 echo "on gpfs3 run pullover.rb 67 99"
 echo ""
-echo "Then run alphabeticalDealOut.rb on each in parallel"
-echo "on gpfs1 run alphabeticalDealOut.rb data_0_33/*.csv"
-echo "on gpfs2 run alphabeticalDealOut.rb data_34_66/*.csv"
-echo "on gpfs3 run alphabeticalDealOut.rb data_67_99/*.csv"
+echo "Then run alphabeticDealOut.rb on each in parallel"
+echo "on gpfs1 run alphabeticDealOut.rb data_0_33/*.csv"
+echo "on gpfs2 run alphabeticDealOut.rb data_34_66/*.csv"
+echo "on gpfs3 run alphabeticDealOut.rb data_67_99/*.csv"
 echo ""
 echo "then run shuffleSort.rb on each in parallel (inter-vm traffic here)"
 echo "on gpfs1 run shuffleSort.rb a b c d e f g h i"
@@ -85,4 +85,4 @@ echo "on gpfs1 reduceToKeyValueStore.rb a b c d e f g h i"
 echo "on gpfs2 reduceToKeyValueStore.rb j k l m n o p q r"
 echo "on gpfs3 reduceToKeyValueStore.rb s t u v w x y z X"
 echo ""
-echo "at this point, should be able to run mumbler.rb on any vm"
+echo "at this point, should be able to mumbler on any vm"

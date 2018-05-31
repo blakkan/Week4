@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 ##################################################################
 #
-# alphabeticDealOut.rb
+# shuffleSort.rb
 #
 #  Just combines removes the year, and combines sorted bigrams
 # to the extent they're already sorted.   It's not guaranteed

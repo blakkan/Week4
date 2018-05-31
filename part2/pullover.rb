@@ -43,9 +43,13 @@ system("mkdir data_#{first}_#{last}")
   system("tr [:upper:] [:lower:] < map_precombine_#{num_string}.csv > downcase_#{num_string}.csv")
   system("rm map_precombine_#{num_string}.csv")
 
-  puts "sorting (and puts uc/lc back together after downcasing)"
-  system("sort -t'\t' downcase_#{num_string}.csv > sorted_#{num_string}.csv")
+  puts "filtering out all but letters and non-initial apostrophes"
+  system("grep '^[a-z][a-z\\']*[:space:][a-z][a-z\\']*' downcase_#{num_string}.csv > clean_#{num_string}.csv")
   system("rm downcase_#{num_string}.csv")
+
+  puts "sorting (and puts uc/lc back together after downcasing)"
+  system("sort -t'\t' clean_#{num_string}.csv > sorted_#{num_string}.csv")
+  #system("rm clean_#{num_string}.csv")
 
   # Do a map (basically get rid of the year and other fields, just keep tuple and count)
   # and a combine to take advantage of any preliminary sorting.
