@@ -54,6 +54,12 @@ scp shuffleSort.rb root@$ip_addr:/root/shuffleSort.rb
 echo "install reduceToKeyValueStore.rb script on $ip_addr"
 scp reduceToKeyValueStore.rb root@$ip_addr:/root/reduceToKeyValueStore.rb
 
+echo "install pick_next_word.rb script on $ip_addr"
+scp pick_next_word.rb root@$ip_addr:/root/pick_next_word.rb
+
+echo "install mumbler.rb script on $ip_addr"
+scp mumbler.rb root@$ip_addr:/root/mumbler.rb
+
 sleep 2
 
 done
@@ -78,3 +84,5 @@ echo "then run reduceToKeyValueStore.rb on each in parallel"
 echo "on gpfs1 reduceToKeyValueStore.rb a b c d e f g h i"
 echo "on gpfs2 reduceToKeyValueStore.rb j k l m n o p q r"
 echo "on gpfs3 reduceToKeyValueStore.rb s t u v w x y z X"
+echo ""
+echo "at this point, should be able to run mumbler.rb on any vm"

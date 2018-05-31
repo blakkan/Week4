@@ -1,0 +1,15 @@
+#!/usr/bin/ruby
+if ARGV.length < 2
+  puts "Usage: ruby mumbler.rb word numeric_limit"
+end
+
+word, limit_string = ARGV
+
+limit_string = 100 if limit_string.nil?
+
+limit_string.to_i.times do
+
+  puts word
+  break if ( word = `ruby pick_next_word.rb #{word}` ) !~ /\S/
+
+end
