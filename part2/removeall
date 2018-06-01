@@ -1,0 +1,4 @@
+#/bin/bash
+
+ls /gpfs/gpfsfpo * | grep -v ^map_precombine | rm -rf
+ls /gpfs/gpfsfpo/data* | rm -rf

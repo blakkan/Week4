@@ -1,0 +1,40 @@
+#!/usr/bin/ruby
+require 'dbm'
+
+word, flag = ARGV
+letter = word[0..0]
+
+Dir.chdir("/gpfs/gpfsfpo")
+
+#open just one kvm store, corresponding to the initial letter
+
+db_handle = DBM.open(letter)
+
+
+
+begin
+  total, list =  Marshal.load(db_handle[word])
+  if not flag.nil?
+    p total
+    p list
+  end
+rescue Exception => e  #just swallow them all (usually bad form)
+  exit(1)
+end
+
+rv = rand(total)
+
+#
+# Note we have the count of each "tail_word", not the cumulative count.
+#  we could save a tiny bit of time (one addtion * length of tail_word list)
+#  if we changed the data structure to save the cumulative count.
+#  That could be a later improvement.
+#
+running_total = 0
+list.each do |item|
+  running_total += item[1]  #TODO note the running total could probably preprocess
+  if rv < running_total
+    puts item[0]
+    break
+  end
+end

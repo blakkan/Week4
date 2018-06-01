@@ -1,36 +1,38 @@
 #!/usr/bin/ruby
-require 'dbm'
-
-word = ARGV.first
+word, flag = ARGV
+letter = word[0..0]
 
 Dir.chdir("/gpfs/gpfsfpo")
 
-db_handles = {}
-(Array('a'..'z') +  ['X']).each do |letter|
-   db_handle_hash[letter] = DBM.open(letter)
-end
+#open just one kvm store, corresponding to the initial letter
 
-#puts word
-first_letter = word.split(//).first
-first_char = line[0..0]
-first_char = 'X' unless db_handles.key?(first_char)
+#shouldn't ssh go self; optimize this    ###TODO
+addr = "ssh root@gpfs2"
+addr = "ssh root@gpfs2 " if ('j'..'r').include?(letter)
+addr = "ssh root@@gpfs3 " if ('s'..'z').include?(letter)
 
-#puts first_letter
+token_list = `$addr grep "^#{word} " combined_#{letter}.csv`.split(/\n/)
+#p token_list
+total = token_list.inject(0){|sum,line| sum + line.split(/\s+/)[2].to_i}
 
-begin
-  total, list =  Marshal.load(db_handle_hash[first_letter][word])
-rescue Exception => e  #just swallow them all (usually bad form)
-  exit(1)
-end
+#puts total
 
 rv = rand(total)
+#puts rv
 
-
+#
+# Note we have the count of each "tail_word", not the cumulative count.
+#  we could save a tiny bit of time (one addtion * length of tail_word list)
+#  if we changed the data structure to save the cumulative count.
+#  That could be a later improvement.
+#
 running_total = 0
-list.each do |item|
-  running_total += item[1]
+token_list.each do |line|
+  head, tail, count =  line.split(/\s+/)
+  running_total += count.to_i  #TODO note the running total could probably preprocess
+  #puts running_total
   if rv < running_total
-    puts item[0]
+    puts tail
     break
   end
 end

@@ -62,6 +62,12 @@ do
  echo "install mumbler script on $ip_addr_p"
  scp mumbler root@$ip_addr_p:/root/mumbler
 
+ echo "install removeall.sh and removeall_but_db on $ip_addr_p"
+ scp removeall root@$ip_addr_p:/root/removeall
+ scp removeall_but_db root@$ip_addr_p:/root/removeall_but_db
+ echo "install dbm_check.rb script on $ip_addr_p"
+ scp dbm_check.rb root@$ip_addr_p:/root/dbm_check.rb
+
 done
 
 

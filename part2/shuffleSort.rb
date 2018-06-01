@@ -18,12 +18,13 @@
 Dir.chdir("/gpfs/gpfsfpo")
 ARGV.each do |letter|
  puts "sorting letter #{letter}"
- system("sort -t'\t' -m #{letter}-*.alp > sorted_#{letter}.csv")
-#  system("rm #{letter}.alp")
+ #TODO - this could/should really be just a merge,as inputs already sorted
+ system("sort -k1,2 #{letter}-*.csv > sorted_#{letter}.csv")
+  system("rm #{letter}-*.csv")
 
 #  puts "combining #{letter}"
  system("/root/map_combiner sorted_#{letter}.csv > combined_#{letter}.csv")
-#  system("rm sorted_#{letter}.csv")
+ system("rm sorted_#{letter}.csv")
 
 
 end
