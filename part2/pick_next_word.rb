@@ -2,17 +2,22 @@
 word, flag = ARGV
 letter = word[0..0]
 
-Dir.chdir("/gpfs/gpfsfpo")
+#Dir.chdir("/gpfs/gpfsfpo")
 
 #open just one kvm store, corresponding to the initial letter
 
 #shouldn't ssh go self; optimize this    ###TODO
-addr = "ssh root@gpfs2"
-addr = "ssh root@gpfs2 " if ('j'..'r').include?(letter)
-addr = "ssh root@@gpfs3 " if ('s'..'z').include?(letter)
+#filename = `./word2filename "#{word}"`.strip
 
-token_list = `$addr grep "^#{word} " combined_#{letter}.csv`.split(/\n/)
-#p token_list
+addr = %Q!ssh root@gpfs1 'grep "^#{word} " $(./word2filename #{word})'!
+if (('j'..'r').include?(letter))
+  addr = %Q!ssh root@gpfs2 'grep "^#{word} " $(./word2filename #{word})'!
+elsif (('s'..'z').include?(letter))
+  addr = %Q!ssh root@gpfs3 'grep "^#{word} " $(./word2filename #{word})'!
+end
+
+token_list = `#{addr}`.split(/\n/)
+
 total = token_list.inject(0){|sum,line| sum + line.split(/\s+/)[2].to_i}
 
 #puts total

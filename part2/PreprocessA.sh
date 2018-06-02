@@ -56,6 +56,9 @@ do
  echo "install reduceToKeyValueStore.rb script on $ip_addr_p"
  scp reduceToKeyValueStore.rb root@$ip_addr_p:/root/reduceToKeyValueStore.rb
 
+ echo "install reduceToKeyValueStore2.rb script on $ip_addr_p"
+ scp reduceToKeyValueStore2.rb root@$ip_addr_p:/root/reduceToKeyValueStore2.rb
+
  echo "install pick_next_word.rb script on $ip_addr_p"
  scp pick_next_word.rb root@$ip_addr_p:/root/pick_next_word.rb
 
@@ -67,6 +70,14 @@ do
  scp removeall_but_db root@$ip_addr_p:/root/removeall_but_db
  echo "install dbm_check.rb script on $ip_addr_p"
  scp dbm_check.rb root@$ip_addr_p:/root/dbm_check.rb
+
+ echo "install the file splayer and finder on $ip_addr_p"
+ scp splayfile.c root@$ip_addr_p:/root/splayfile.c
+ scp word2filename.c root@$ip_addr_p:/root/word2filename.c
+ scp crc32.c root@$ip_addr_p:/root/crc32.c
+ scp crc32.h root@$ip_addr_p:/root/crc32.h
+ ssh root@$ip_addr_p "gcc splayfile.c crc32.c -o splayfile"
+ ssh root@$ip_addr_p "gcc word2filename.c crc32.c -o word2filename"
 
 done
 
@@ -86,9 +97,9 @@ echo "on gpfs1 run shuffleSort.rb a b c d e f g h i"
 echo "on gpfs2 run shuffleSort.rb j k l m n o p q r"
 echo "on gpfs3 run shuffleSort.rb s t u v w x y z X"
 echo ""
-echo "then run reduceToKeyValueStore.rb on each in parallel"
-echo "on gpfs1 reduceToKeyValueStore.rb a b c d e f g h i"
-echo "on gpfs2 reduceToKeyValueStore.rb j k l m n o p q r"
-echo "on gpfs3 reduceToKeyValueStore.rb s t u v w x y z X"
+echo "then run splayfile on each in parallel"
+echo "on gpfs1 splayfile a b c d e f g h i"
+echo "on gpfs2 splayfile j k l m n o p q r"
+echo "on gpfs3 splayfile s t u v w x y z X"
 echo ""
 echo "at this point, should be able to mumbler on any vm"
