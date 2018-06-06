@@ -7,7 +7,7 @@ Dir.chdir("/gpfs/gpfsfpo")
 #open just one kvm store, corresponding to the initial letter
 
 #shouldn't ssh go self; optimize this    ###TODO
-addr = "ssh root@gpfs2"
+addr = "ssh root@gpfs1"
 addr = "ssh root@gpfs2 " if ('j'..'r').include?(letter)
 addr = "ssh root@@gpfs3 " if ('s'..'z').include?(letter)
 

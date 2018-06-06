@@ -46,7 +46,7 @@ system("mkdir data_#{first}_#{last}")
   system("rm map_precombine_#{num_string}.csv")
 
   puts "filtering out all but letters and non-initial apostrophes"
-  cmd =  "grep -P \"^[a-z][a-z']*\s[a-z][a-z]*\" downcase_#{num_string}.csv > clean_#{num_string}.csv"
+  cmd =  "grep -P \"^[a-z][a-z']*\s[a-z][a-z\']*\" downcase_#{num_string}.csv > clean_#{num_string}.csv"
   puts cmd
   system(cmd)
   system("rm downcase_#{num_string}.csv")
